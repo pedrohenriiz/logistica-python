@@ -1,11 +1,12 @@
 from pydantic import BaseModel, Field
 from ..value_objects import address, status
+from customer.domain.entities.customer import Customer
 
 class Shipment_Order(BaseModel):
 
-    """args: ID, weight, dimension, address, status"""
+    """args: ID, address, status, customer"""
     id: int = Field(..., gt=0)
-    weight: int = Field(..., gt=0, description="Peso do pacote em gramas")
-    dimension: int = Field(..., gt=0, description="Dimensão do pacote em centímetros cúbicos")
     address: address.Address
     status: status.Status
+    customer: Customer
+

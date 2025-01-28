@@ -10,9 +10,8 @@ class Status(BaseModel):
         "Aguardando retirada"
     }
 
-    @validator(status)
+    @validator("status")
     def validate_status(cls, value) -> Literal["Em trânsito","Entregue","Aguardando retirada"]:
-        """Validate if the status is allowed"""
         if value not in cls.ALLOWED_VALUES:
             raise ValueError(f"O status {value} é inválido")
         

@@ -1,8 +1,10 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Field
+import math
 
 class Address(BaseModel):
-
+    """args: street, number, city, state, zip_code, country"""
     street: str
+    number: int = Field(..., gt=0)
     city: str
     state: str
     zip_code: str
@@ -14,6 +16,13 @@ class Address(BaseModel):
             raise ValueError("O campo street não pode ser vazio!")
         return value
     
+    @validator("number")
+    def validate_number(cls, value):
+        print(type(value))
+        if math.isnan(value):
+            raise ValueError("O campo precisa ser um número inteiro!")
+        return value
+
     @validator('city')
     def validate_city(cls, value):
         if not value.strip():
